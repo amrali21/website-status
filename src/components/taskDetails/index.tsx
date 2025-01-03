@@ -27,6 +27,7 @@ import {
     TextAreaProps,
 } from '@/interfaces/taskDetails.type';
 import TaskUpdateModal from './TaskUpdateModal';
+import TaskContentShimmer from '../Loaders/taskContentShimmer';
 
 export function Button(props: ButtonProps) {
     const { buttonName, clickHandler, value, disabled } = props;
@@ -159,15 +160,15 @@ const TaskDetails: FC<Props> = ({ taskID }) => {
             if (
                 taskDetailsData &&
                 editedTaskDetails[
-                    key as keyof taskDetailsDataType['taskData']
+                key as keyof taskDetailsDataType['taskData']
                 ] !==
-                    taskDetailsData[
-                        key as keyof taskDetailsDataType['taskData']
-                    ]
+                taskDetailsData[
+                key as keyof taskDetailsDataType['taskData']
+                ]
             ) {
                 updatedFields[key as keyof taskDetailsDataType['taskData']] =
                     editedTaskDetails[
-                        key as keyof taskDetailsDataType['taskData']
+                    key as keyof taskDetailsDataType['taskData']
                     ];
             }
         }
@@ -187,7 +188,7 @@ const TaskDetails: FC<Props> = ({ taskID }) => {
             const errorMessage =
                 error && typeof error === 'object' && 'data' in error
                     ? (error.data as { message?: string }).message ||
-                      'An error occurred while saving'
+                    'An error occurred while saving'
                     : 'An error occurred while saving';
             toast(ERROR, errorMessage);
         } finally {
@@ -210,7 +211,7 @@ const TaskDetails: FC<Props> = ({ taskID }) => {
 
     function renderLoadingComponent() {
         if (isLoading) {
-            return <p className={styles.textCenter}>Loading...</p>;
+            return <div className={styles.parentContainer}> <TaskContentShimmer /> </div>;
         }
         if (isError) {
             return <p className={styles.textCenter}>Something went wrong!</p>;
