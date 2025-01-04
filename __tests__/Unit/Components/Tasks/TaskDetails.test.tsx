@@ -634,6 +634,18 @@ describe('Task details Edit mode ', () => {
         });
         expect(screen.getByTestId('assignee-input')).toBeInTheDocument();
     });
+
+    test('Task Details Shimmer should show 7 shimmer boxes when loading', async () => {
+        renderWithRouter(
+            <Provider store={store()}>
+                <TaskDetails taskID={details.taskID} />
+            </Provider>,
+            { query: { dev: 'true' } }
+        );
+
+        const taskContentShimmerCards = screen.getAllByTestId('task-content-shimmer-card');
+        expect(taskContentShimmerCards).toHaveLength(7);
+    });
 });
 
 describe('TaskDependency', () => {
